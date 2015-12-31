@@ -16,6 +16,8 @@ RUN set -x \
 
 RUN git clone https://github.com/etsy/phan /opt/phan
 
+RUN cd /opt/phan && git checkout 0.1
+
 RUN cd /opt/phan && composer install
 
 ENTRYPOINT ["tini", "/opt/phan/phan", "--"]

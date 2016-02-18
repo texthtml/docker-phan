@@ -14,10 +14,10 @@ RUN set -x \
     && curl -fSL "https://github.com/krallin/tini/releases/download/v0.5.0/tini" -o /usr/local/bin/tini \
     && chmod +x /usr/local/bin/tini
 
-RUN git clone https://github.com/etsy/phan /opt/phan
+ENV PHAN_VERSION 0.2
 
-RUN cd /opt/phan && git checkout 0.1
-
-RUN cd /opt/phan && composer install
+RUN git clone https://github.com/etsy/phan /opt/phan && \
+    cd /opt/phan && git checkout $PHAN_VERSION && \
+    cd /opt/phan && composer install
 
 ENTRYPOINT ["tini", "/opt/phan/phan", "--"]

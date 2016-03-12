@@ -14,7 +14,7 @@ RUN set -x \
     && curl -fSL "https://github.com/krallin/tini/releases/download/v0.5.0/tini" -o /usr/local/bin/tini \
     && chmod +x /usr/local/bin/tini
 
-ENV PHAN_VERSION 0.3
+ENV PHAN_VERSION 0.4
 
 RUN git clone https://github.com/etsy/phan /opt/phan && \
     cd /opt/phan && git checkout $PHAN_VERSION && \

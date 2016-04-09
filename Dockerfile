@@ -1,23 +1,15 @@
-FROM php:7
+FROM php:7.0-alpine
 
-RUN apt-get update
-RUN apt-get install -y zlib1g-dev git libzmq3 libzmq3-dev
-RUN docker-php-ext-install zip mbstring
-
-RUN git clone https://github.com/nikic/php-ast.git /tmp/php-ast && \
+RUN apk --update add zlib-dev git && \
+    docker-php-ext-install zip mbstring && \
+    git clone https://github.com/nikic/php-ast.git /tmp/php-ast && \
     cd /tmp/php-ast && phpize && ./configure && make install && \
-    echo extension=ast.so > /usr/local/etc/php/conf.d/ast.ini
-
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
-
-RUN set -x \
-    && curl -fSL "https://github.com/krallin/tini/releases/download/v0.5.0/tini" -o /usr/local/bin/tini \
-    && chmod +x /usr/local/bin/tini
-
-ENV PHAN_VERSION 0.4
-
-RUN git clone https://github.com/etsy/phan /opt/phan && \
-    cd /opt/phan && git checkout $PHAN_VERSION && \
-    cd /opt/phan && composer install
+    echo extension=ast.so > /usr/local/etc/php/conf.d/ast.ini && \
+    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer && \
+    composer create-project --no-dev --prefer-dist etsy/phan /opt/phan 0.4 && \
+    curl -fSL "https://github.com/krallin/tini/releases/download/v0.9.0/tini-static" -o /usr/local/bin/tini && \
+    chmod +x /usr/local/bin/tini && \
+    apk del zlib-dev git && \
+	rm -rf /var/cache/apk/* /tmp/php-ast /usr/local/bin/composer
 
 ENTRYPOINT ["tini", "/opt/phan/phan", "--"]

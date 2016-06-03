@@ -8,7 +8,7 @@ RUN apk add --no-cache git && \
     apk del .phpize-deps && \
     echo extension=ast.so > /usr/local/etc/php/conf.d/ast.ini && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer && \
-    composer create-project --no-dev --prefer-dist etsy/phan /opt/phan 0.4 && \
+    composer create-project --no-dev --prefer-dist etsy/phan /opt/phan 0.5 && \
     rm -rf /var/cache/apk/* /tmp/php-ast /usr/local/bin/composer && \
     apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ tini
 RUN echo $PHPIZE_DEPS

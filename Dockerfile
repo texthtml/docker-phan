@@ -11,5 +11,4 @@ RUN apk add --no-cache git && \
     composer create-project --no-dev --prefer-dist etsy/phan /opt/phan 0.6 && \
     rm -rf /var/cache/apk/* /tmp/php-ast /usr/local/bin/composer && \
     apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ tini
-RUN echo $PHPIZE_DEPS
 ENTRYPOINT ["/sbin/tini", "--", "/opt/phan/phan"]

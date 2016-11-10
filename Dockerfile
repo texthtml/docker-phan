@@ -1,6 +1,6 @@
 FROM php:7.0-alpine
 
-RUN apk add --no-cache git && \
+RUN apk add --no-cache git tini && \
     git clone https://github.com/nikic/php-ast.git /tmp/php-ast && \
     apk del git && \
     apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS && \
@@ -9,9 +9,10 @@ RUN apk add --no-cache git && \
     echo extension=ast.so > /usr/local/etc/php/conf.d/ast.ini && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer && \
     composer create-project --no-dev --prefer-dist etsy/phan /opt/phan 0.6 && \
-    rm -rf /var/cache/apk/* /tmp/php-ast /usr/local/bin/composer && \
-    apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ tini
+    rm -r /tmp/php-ast /usr/local/bin/composer
+
+ ENV PATH $PATH:/opt/phan/
 
 ENTRYPOINT ["/sbin/tini", "--"]
 
-CMD ["/opt/phan/phan"]
+CMD ["phan"]

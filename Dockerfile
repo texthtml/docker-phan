@@ -12,6 +12,8 @@ RUN apk add --no-cache git && \
     rm -rf /var/cache/apk/* /tmp/php-ast /usr/local/bin/composer && \
     apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ tini
 
+ ENV PATH $PATH:/opt/phan/
+
 ENTRYPOINT ["/sbin/tini", "--"]
 
-CMD ["/opt/phan/phan"]
+CMD ["phan"]

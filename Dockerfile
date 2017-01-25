@@ -1,4 +1,4 @@
-FROM php:7.0-alpine
+FROM php:7.2-rc-alpine
 
 RUN apk add --no-cache git tini && \
     git clone https://github.com/nikic/php-ast.git /tmp/php-ast && \

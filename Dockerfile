@@ -1,4 +1,4 @@
-FROM php:7.1-alpine
+FROM php:7.2-rc-alpine
 
 RUN apk add --no-cache git tini && \
     git clone https://github.com/nikic/php-ast.git /tmp/php-ast && \
@@ -8,7 +8,7 @@ RUN apk add --no-cache git tini && \
     apk del .phpize-deps && \
     echo extension=ast.so > /usr/local/etc/php/conf.d/ast.ini && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer && \
-    composer create-project --no-dev --prefer-dist etsy/phan /opt/phan 0.10.2 && \
+    composer create-project --no-dev --prefer-dist etsy/phan /opt/phan 0.11.0 && \
     rm -r /tmp/php-ast /usr/local/bin/composer
 
  ENV PATH $PATH:/opt/phan/

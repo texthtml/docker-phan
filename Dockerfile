@@ -3,6 +3,7 @@ FROM php:7.2-alpine
 RUN apk add --no-cache git tini && \
     git clone https://github.com/nikic/php-ast.git /tmp/php-ast && \
     apk del git && \
+    docker-php-ext-install pcntl && \
     apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS && \
     cd /tmp/php-ast && phpize && ./configure && make install && \
     apk del .phpize-deps && \

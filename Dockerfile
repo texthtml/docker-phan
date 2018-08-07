@@ -9,7 +9,7 @@ RUN apk add --no-cache git tini && \
     apk del .phpize-deps && \
     echo extension=ast.so > /usr/local/etc/php/conf.d/ast.ini && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer && \
-    composer create-project --no-dev --prefer-dist etsy/phan /opt/phan 0.12.3 && \
+    composer create-project --no-dev --prefer-dist etsy/phan /opt/phan 0.12.15 && \
     rm -r /tmp/php-ast /usr/local/bin/composer
 
  ENV PATH $PATH:/opt/phan/

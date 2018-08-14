@@ -1,6 +1,6 @@
 FROM php:7.2-alpine
 
-RUN apk add --no-cache git tini && \
+RUN apk add --no-cache git && \
     git clone https://github.com/nikic/php-ast.git /tmp/php-ast && \
     apk del git && \
     docker-php-ext-install pcntl && \
@@ -12,8 +12,6 @@ RUN apk add --no-cache git tini && \
     composer create-project --no-dev --prefer-dist etsy/phan /opt/phan dev-master && \
     rm -r /tmp/php-ast /usr/local/bin/composer
 
- ENV PATH $PATH:/opt/phan/
-
-ENTRYPOINT ["/sbin/tini", "--"]
+ENV PATH $PATH:/opt/phan/
 
 CMD ["phan"]

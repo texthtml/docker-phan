@@ -8,7 +8,7 @@ RUN apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS git binutils && \
     strip -s $(php-config --extension-dir)/ast.so && \
     strip -s $(php-config --extension-dir)/pcntl.so && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer && \
-    composer create-project --no-dev --prefer-dist etsy/phan /opt/phan 1.2.0 && \
+    composer create-project --no-dev --prefer-dist etsy/phan /opt/phan 1.2.8 && \
     rm -r /tmp/php-ast /usr/local/bin/composer && \
     apk del .phpize-deps
 

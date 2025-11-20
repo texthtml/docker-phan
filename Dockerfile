@@ -1,4 +1,4 @@
-FROM php:8.4-alpine
+FROM php:8.5-alpine
 
 RUN apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS git binutils && \
     git clone https://github.com/nikic/php-ast.git /tmp/php-ast && \
